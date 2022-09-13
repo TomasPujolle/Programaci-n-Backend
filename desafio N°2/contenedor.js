@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-class Contenedor {
+module.exports = class Contenedor {
          constructor(rutaArchivo) {
             this.rutaArchivo = rutaArchivo;
          }
@@ -93,7 +93,11 @@ class Contenedor {
          }
 }         
 
-const contenedor = new Contenedor('./productos.txt')
+
+
+ //const Contenedor = new Contenedor('./productos.txt')
+
+
 
 //contenedor.save({title: 'producto X', precio: 200 })
 
