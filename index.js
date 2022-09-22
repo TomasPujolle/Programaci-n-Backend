@@ -16,7 +16,7 @@ module.exports = class Contenedor {
             }    
          }
 
-         async save(obj) {
+         async Guardar(obj) {
             const contenidoArchivo = await this.#leerArchivo()
             try {
                 if ( contenidoArchivo.length !== 0 ) {
@@ -32,12 +32,13 @@ module.exports = class Contenedor {
             
          }
 
-        async getById(id) {
+        async TomarPorId(id) {
             const contenidoArchivo = await this.#leerArchivo()
             try {
                 const producto = contenidoArchivo.filter(item => item.id === id)
                 if (producto.length > 0) {
-                        console.log('Producto encontrado: ' + JSON.stringify(producto, true, 2));
+                        console.log('Producto encontrado: ' + JSON.stringify(producto, true, 2))
+                        return producto
                     } else {
                         console.log('producto no existe')
                     }
@@ -47,7 +48,7 @@ module.exports = class Contenedor {
             
          }
 
-         async getAll() {
+         async TomarTodo() {
             const contenidoArchivo = await this.#leerArchivo()
             try {
                 return contenidoArchivo
@@ -58,7 +59,7 @@ module.exports = class Contenedor {
          }
 
 
-         async deleteById(id) {
+         async BorrarPorId(id) {
             const contenidoArchivo = await this.#leerArchivo()
             try {
                 const producto = contenidoArchivo.filter(item => item.id !== id)
@@ -77,14 +78,14 @@ module.exports = class Contenedor {
                 
         }
 
-         async deleteAll() {
+         async BorrarTodo() {
             const contenidoArchivo = await this.#leerArchivo()
             try {   
             if( contenidoArchivo.length > 0 ) {
                 await fs.promises.writeFile(this.rutaArchivo, JSON.stringify([], null, 2), 'utf-8')
-                console.log('productos eliminados')
+                return 'productos eliminados'
             } else {
-                console.log('Aqui no hay nada')
+                return 'Aqui no hay nada'
             }
 
             } catch (error) {
@@ -92,6 +93,17 @@ module.exports = class Contenedor {
             }   
             
          }
+
+         async ModifporId(id, producto) {
+            try {
+                const contenidoArchivo = await this.#leerArchivo()
+                await fs.promises.writeFile(contenidoArchivo.find(e => e.id === id), JSON.stringify([...producto], null, 2), 'utf-8');
+    
+                return 'Objeto modificado.'
+            } catch (error) {
+                return error;
+            }
+        }
 }
 
 
